@@ -8,7 +8,7 @@ PyBank will summarise data with a date and profit/loss amount:
 
 * Total months
 * Total amount
-* Average Change
+* Average Change between two months
 * Greatest increase in profits between two months
 * Greatest decrease in profits between two months
 
