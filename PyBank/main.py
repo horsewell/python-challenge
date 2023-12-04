@@ -5,8 +5,6 @@ import csv
 # Set path for file
 csvpath = os.path.join(".", "Resources", "budget_data.csv")
 
-data = []
-
 total_months        = 0
 total_amount        = 0
 average_change      = 0
@@ -29,7 +27,7 @@ with open(csvpath, encoding='UTF-8') as csvfile:
     csv_reader = csv.reader(csvfile, delimiter=",")
 
     # store the header
-    header_row = next(csv_reader)   
+    header_row = next(csv_reader)
     first = True
 
     # cycle through the rows
