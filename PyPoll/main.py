@@ -4,12 +4,16 @@ import csv
 
 # Set path for file
 csvpath = os.path.join(".", "Resources", "election_data.csv")
+txtpath = os.path.join(".", "analysis", "election_analysis.txt")
 
+# declare variables
 total_votes = 0
 candidates  = []
 count_votes = []
 count_max   = 0
 winner      = ""
+
+output = []
 
 # Open the CSV using the UTF-8 encoding
 with open(csvpath, encoding='UTF-8') as csvfile:
@@ -30,21 +34,27 @@ with open(csvpath, encoding='UTF-8') as csvfile:
             # if candidate already in candidates just increase the votes
             count_votes[candidates.index(row[2])] += 1
         
-# output
+# Create Output
 
-print(f"Election Results")
-print(f"-------------------------")
-print(f"Total Votes: {total_votes}")
-print(f"-------------------------")
+output.append(f"Election Results")
+output.append(f"-------------------------")
+output.append(f"Total Votes: {total_votes}")
+output.append(f"-------------------------")
 # cycle through the candidates
 for candidate in candidates:
     candidate_votes = count_votes[candidates.index(candidate)]
-    print(f"{candidate}: {candidate_votes/total_votes:.3%} ({candidate_votes})")
+    output.append(f"{candidate}: {candidate_votes/total_votes:.3%} ({candidate_votes})")
     # get the maximum votes for the candidate
     if candidate_votes > count_max:
         count_max = candidate_votes
 # the winner is the one with the max votes
 winner = candidates[count_votes.index(count_max)]
-print(f"-------------------------")
-print(f"Winner: {winner}")
-print(f"-------------------------")
+output.append(f"-------------------------")
+output.append(f"Winner: {winner}")
+output.append(f"-------------------------")
+
+# save and print output
+
+print(*output, sep = "\n")
+with open(txtpath, 'w', encoding='UTF-8') as f:
+    f.writelines('\n'.join(output))

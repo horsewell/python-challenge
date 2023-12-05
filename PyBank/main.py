@@ -4,7 +4,9 @@ import csv
 
 # Set path for file
 csvpath = os.path.join(".", "Resources", "budget_data.csv")
+txtpath = os.path.join(".", "analysis", "budget_analysis.txt")
 
+# declare variables
 total_months        = 0
 total_amount        = 0
 average_change      = 0
@@ -21,6 +23,7 @@ r_date = ""
 change = 0
 sum_change = 0
 
+output = []
 
 # Open the CSV using the UTF-8 encoding
 with open(csvpath, encoding='UTF-8') as csvfile:
@@ -28,7 +31,7 @@ with open(csvpath, encoding='UTF-8') as csvfile:
 
     # store the header
     header_row = next(csv_reader)
-    first = True
+    first_row  = True
 
     # cycle through the rows
     for row in csv_reader:
@@ -37,36 +40,44 @@ with open(csvpath, encoding='UTF-8') as csvfile:
         r_amount = int(row[1])
 
         # get the change in profit or loss
-        change  = (r_amount - p_amount)
+        change   = (r_amount - p_amount)
 
         # sum the change
-        if not first:
+        if not first_row:
             sum_change += change
 
         # get the total months and amount
         total_months += 1
         total_amount += r_amount
 
+        # check if greatest increase
         if greatest_inc_amount < change:
             greatest_inc_date   = r_date
             greatest_inc_amount = change
 
+        # check if greatest decrease
         if greatest_dec_amount > change:
             greatest_dec_date   = r_date
             greatest_dec_amount = change
 
-        p_amount = r_amount
-        p_date   = r_date
-        first = False
+        p_amount  = r_amount
+        p_date    = r_date
+        first_row = False
 
 average_change = round(sum_change / (total_months -1), 2)
 
-# output
+# create output
 
-print(f"Financial Analysis")
-print(f"----------------------------")
-print(f"Total Months: {total_months}")
-print(f"Total: ${total_amount}")
-print(f"Average Change: ${average_change}")
-print(f"Greatest Increase in Profits: {greatest_inc_date} (${greatest_inc_amount})")
-print(f"Greatest Decrease in Profits: {greatest_dec_date} (${greatest_dec_amount})")
+output.append(f"Financial Analysis")
+output.append(f"----------------------------")
+output.append(f"Total Months: {total_months}")
+output.append(f"Total: ${total_amount}")
+output.append(f"Average Change: ${average_change}")
+output.append(f"Greatest Increase in Profits: {greatest_inc_date} (${greatest_inc_amount})")
+output.append(f"Greatest Decrease in Profits: {greatest_dec_date} (${greatest_dec_amount})")
+
+# save and print output
+
+print(*output, sep = "\n")
+with open(txtpath, 'w', encoding='UTF-8') as f:
+    f.writelines('\n'.join(output))

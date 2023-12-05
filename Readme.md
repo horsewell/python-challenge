@@ -1,6 +1,6 @@
 # Python Challenge
 
-This is the first python code for the bootcamp. There are two subfolders PyBank and PyPoll that can be run to analyse two similar CSV files and summarise the data. The summary will be displayed in the terminal and saved to an output file in the analysis directory.
+This is the first python code for the bootcamp. There are two subfolders PyBank and PyPoll that can be run to analyse two similar CSV files and summarise the data. The summary will be displayed in the terminal and saved to an output file in the analysis directory, it will be over written on each attempt.
 
 ## PyBank
 
